@@ -1,0 +1,88 @@
+﻿@model WebMvc.Models.ProductProductWastes
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Product.ProductId" class="control-label"></label>
+                <input asp-for="Product.ProductId" class="form-control" readonly />
+                <span asp-validation-for="Product.ProductId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Name" class="control-label"></label>
+                <input asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.BasePrice" class="control-label"></label>
+                <input asp-for="Product.BasePrice" class="form-control" />
+                <span asp-validation-for="Product.BasePrice" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Product.IsSoldByWeight" /> @Html.DisplayNameFor(model => model.Product.IsSoldByWeight)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.productWastes.First().Waste.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.productWastes.First().Waste.RecyclingPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.productWastes.First().Amount)
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.productWastes != null)
+                {
+                    foreach (var item in Model.productWastes)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Waste.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Waste.RecyclingPrice)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Amount)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditCardWaste", new { id = item.Id })
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

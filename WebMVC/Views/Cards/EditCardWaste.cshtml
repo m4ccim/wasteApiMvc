@@ -1,0 +1,51 @@
+﻿@model WebMvc.Models.CardWaste
+
+@{
+    ViewData["Title"] = "EditCardWaste";
+}
+
+<h1>EditCardWaste</h1>
+
+<h4>CardWaste</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditCardWaste">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="CardWasteId" class="form-control" hidden />
+                <span asp-validation-for="CardWasteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CardId" class="control-label"></label>
+                <input asp-for="CardId" class="form-control" readonly/>
+                <span asp-validation-for="CardId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="WasteId" class="form-control" hidden />
+                <span asp-validation-for="WasteId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Waste.Name" class="control-label"></label>
+                <input asp-for="Waste.Name" class="form-control" readonly />
+                <span asp-validation-for="Waste.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

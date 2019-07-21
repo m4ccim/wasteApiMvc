@@ -1,0 +1,13 @@
+﻿@{
+    if (CallApi.dic.ContainsKey("SuccessMessage"))
+    {
+        TempData["SuccessMessage"] = CallApi.dic["SuccessMessage"];
+    }
+    else if (CallApi.dic.ContainsKey("ErrorMessage"))
+    {
+        TempData["ErrorMessage"] = CallApi.dic["ErrorMessage"];
+    }
+    CallApi.dic.Clear();
+    Layout = "_Layout";
+
+}

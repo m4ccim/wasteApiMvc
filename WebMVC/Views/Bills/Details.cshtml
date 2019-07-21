@@ -1,0 +1,156 @@
+﻿@model WebMvc.Models.BillDetails
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Invoice</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bill.BillId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bill.BillId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bill.DateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bill.DateTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bill.Discount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bill.Discount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bill.Total)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bill.Total)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bill.IsCompleted)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bill.IsCompleted)
+        </dd>
+    </dl>
+    <table class="table table-bordered col-sm-6">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductDetails.First().Product.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductDetails.First().Product.BasePrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductDetails.First().Amount)
+                </th>
+                <th>|</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductDetails.First().WasteDiscounts.First().Waste.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductDetails.First().WasteDiscounts.First().Waste.RecyclingPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductDetails.First().WasteDiscounts.First().DiscountedAmount)
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ProductDetails != null)
+            {
+                foreach (var item in Model.ProductDetails)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Product.BasePrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                    </tr>
+
+                <thead>
+                    <tr></tr>
+                </thead>
+                <tbody>
+                    @if (item.WasteDiscounts != null)
+                    {
+                        foreach (var waste in item.WasteDiscounts)
+                        {
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => waste.Waste.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => waste.Waste.RecyclingPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => waste.DiscountedAmount)
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+
+            }
+
+        }
+        </table>
+
+        <div class="col-sm-6">
+            <script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	exportEnabled: true,
+	animationEnabled: true,
+	title: {
+		text: "@Localizer["Discount pie chart"]",
+		fontSize: 21
+	},
+	data: [{
+		type: "pie",
+		startAngle: 160,
+		toolTipContent: "<b>{label}</b>: {y}₴",
+		indexLabel: "{label} - {y}₴",
+		dataPoints: @Html.Raw(ViewBag.DataPoints)
+	}]
+});
+chart.render();
+
+}
+            </script>
+        </div>
+    </div>
+    <div>
+        @if (!Model.Bill.IsCompleted)
+        {
+            @Html.ActionLink("Add item to bill", "CreateBillProduct", "Bills", new { billId = Model.Bill.BillId });
+        }
+        | <a asp-action="Index">Back to List</a>
+    </div>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+

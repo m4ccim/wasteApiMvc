@@ -1,0 +1,92 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model WebMvc.Models.CardCardWastes
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+
+<h4>Card</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CardWastes.First().Waste.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CardWastes.First().Waste.StartAmount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CardWastes.First().Waste.RecyclingPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CardWastes.First().Amount)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CardWastes)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Waste.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Waste.StartAmount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Waste.RecyclingPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <form asp-action="Profile">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="Card.CardId" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.CardOwnerName" class="control-label"></label>
+                <input asp-for="Card.CardOwnerName" class="form-control" />
+                <span asp-validation-for="Card.CardOwnerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.Email" class="control-label"></label>
+                <input asp-for="Card.Email" class="form-control" />
+                <span asp-validation-for="Card.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Card.IsAdmin" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <input asp-for="Card.Balance" class="form-control" hidden />
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.PasswordHash" class="control-label"></label>
+                @Html.TextBoxFor(m => m.Card.PasswordHash, null, new { @class = "form-control", @type = "password" })
+                <span asp-validation-for="Card.PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

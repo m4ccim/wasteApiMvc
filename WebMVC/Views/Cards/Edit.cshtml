@@ -1,0 +1,105 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model WebMvc.Models.CardCardWastes
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Card</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CardWastes.First().Waste.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CardWastes.First().Waste.StartAmount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CardWastes.First().Waste.RecyclingPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CardWastes.First().Amount)
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CardWastes)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Waste.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Waste.StartAmount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Waste.RecyclingPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "EditCardWaste", new { id = item.CardWasteId })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        @Html.ActionLink("Reset balance", "ResetBalance", "Cards", new { id = Model.Card.CardId }, new { @class = "btn btn-success" })
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Card.CardId" class="control-label"></label>
+                <input asp-for="Card.CardId" class="form-control" readonly />
+                <span asp-validation-for="Card.CardId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.CardOwnerName" class="control-label"></label>
+                <input asp-for="Card.CardOwnerName" class="form-control" />
+                <span asp-validation-for="Card.CardOwnerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.Balance" class="control-label"></label>
+                <input asp-for="Card.Balance" class="form-control" />
+                <span asp-validation-for="Card.Balance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.Email" class="control-label"></label>
+                <input asp-for="Card.Email" class="form-control" />
+                <span asp-validation-for="Card.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <input asp-for="Card.IsAdmin" type="checkbox" id="toggle-one" data-on="@Localizer["Admin"]"
+                       data-off="@Localizer["User"]" data-toggle="toggle" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Card.PasswordHash" class="control-label"></label>
+                @Html.TextBoxFor(m => m.Card.PasswordHash, null, new { @class = "form-control", @type = "password" })
+                <span asp-validation-for="Card.PasswordHash" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+}

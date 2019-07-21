@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@Localizer["Welcome"], @CallApi.Name</h1>
+    <hr />
+    <p>@Localizer["YouAuth"]  @Html.ActionLink(@CallApi.Email, "Profile", "Employee")</p>
+    <p>@Localizer["YourRole"] @CallApi.Role</p>
+    <h4>@Localizer["Your Balance is "] @CallApi.Balance.ToString( "#.##" )₴</h4>
+</div>
